@@ -1,7 +1,17 @@
-import http from 'http' 
+import express from 'express' 
+import bodyParser from 'body-parser' 
+const app = express() 
 
-http.createServer((req , res) => {
-  res.writeHead(200 , {"Content-Type" : "text/html"})
-  res.end(" <h1> es6 node </h1>")
-}).listen(3000 , () => console.log("running port 3000"))
+import catRouter from './catRouter'
 
+app.use(bodyParser.json()) 
+app.use(bodyParser.urlencoded({extended: true}))
+
+app.get('/' , (req , res) => {
+  res.json({message: "this is the homepage for the api"})
+})
+
+app.use('/cat' , catRouter) 
+
+
+app.listen(3000 , () => console.log('running on port 3000'))
