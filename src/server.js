@@ -1,6 +1,11 @@
 import express from 'express' 
 import bodyParser from 'body-parser' 
+import mongoose from 'mongoose'
 const app = express() 
+mongoose.connect('mongodb://localhost/api');
+mongoose.Promise = global.Promise 
+const db = mongoose.connection
+db.on('error', e => console.error('connection error: ' + e ));
 
 import catRouter from './catRouter'
 
